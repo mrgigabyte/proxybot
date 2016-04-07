@@ -179,7 +179,7 @@ bot.send_message(message.chat.id, "Please click on [this](www.google.com)to sear
 8. This bot only works in the private chats, I've tried making it work in the groups but it didn't really worked, if you can improve this bot then do let [me](https://telegram.me/mrgigabytebot) know! I would be glad to make this work better
 
 ## Upcoming Features
-* Since we know that it's a bit difficult to remember all the nicknames I'll soon add a command to view a list of all the nicknames along with the user's first name
+* Since we know that it's a bit difficult to remember all the nicknames I'll soon add a command to view a list of all the nicknames along with the user's first name **(Edit: I've added the nick-names list feature!)**
 * I would be working on adding some more helpful features for admins and maybe for the users as well let's see :)
 
 ## Remember!
