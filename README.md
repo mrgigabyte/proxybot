@@ -1,7 +1,7 @@
-#<p align="center">Telegram Proxy Bot <hr>
+#<p align="center">Telegram Proxy Bot 
 <p align="center">A simple BITM, for [Telegram](https://telegram.org/) acting as some kind of "proxy". an use it as "virtual" second account for your purposes revealing your "real" identity.
 
-<p align ="center">Credits for the original version of this bot goes to **Groosha**, I've simply added certain features which I thought were needed</p> <br>
+<p align ="center">Credits to **Groosha** for the actual version, I've simply added certain features which I thought were needed</p> <br>
 
  * [Prerequisites](#prerequisites)
  * [How to install](#how-to-install)
