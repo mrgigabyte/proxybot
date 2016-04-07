@@ -6,6 +6,7 @@
 import telebot
 import config
 import dbhelper
+import os
 
 bot = telebot.TeleBot(config.token)
 
@@ -128,7 +129,12 @@ def remove_from_blocklist(file, person):
               f.write(line)
     f.close()
 
-#step handler for adding the nickname as the key for the dictionary
+if os.stat(config.storage_namelist).st_size == 0: #checks if the file is empty or not. If empty--> create a new dict() else--> load it
+   user_name = dict()
+else:
+   user_name = load_dict(config.storage_namelist)
+
+#step handler for adding the nickname as the key for the dictionary as well as storing them in namelist file
 def process_name_step(message, dict_name=None, file=None, val=None ):
     try:
       if dict_name !=None and file != None and val !=None:
@@ -136,6 +142,12 @@ def process_name_step(message, dict_name=None, file=None, val=None ):
           lower_key = key.lower()
           add_key_dict(file, dict_name, lower_key, val)
           bot.reply_to(message,"Thanks! " +"\n"+ "*Remember to block this user with the name:* "+"`'"+key+"'`"+" *only!*",parse_mode="Markdown" )
+          add_key_dict(config.storage_namelist, user_name, lower_key, firstname)
+          symfile = open(config.storage_fnamelist,'a')
+          for i in range(len(user_name)):
+              temp = list(user_name.popitem())
+              str1 = ': '.join(temp)
+              symfile.writelines(str1+'\n') 
     except Exception as e:
       bot.reply_to(config.my_id, 'oooops')
 
@@ -173,5 +185,4 @@ def unvb_msg(message, file=None):
           bot.reply_to(message,"Thanks! " +"\n"+ "*The Message has been set successfully* ",parse_mode="Markdown" )
     except Exception as e:
       bot.reply_to(config.my_id, 'oooops! something went wrong')
-
 
