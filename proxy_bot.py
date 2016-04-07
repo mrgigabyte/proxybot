@@ -27,7 +27,7 @@ else:
 #for the list of all the commands
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["help"])
 def command_start(message):
-    bot.send_message(message.chat.id, """*Hey Fella!\nSo, here is a list of commands that you should keep in mind:* \n 
+    bot.send_message(message.chat.id, """*Hey """ + message.chat.first_name +"""!\nSo, here is a list of commands that you should keep in mind:* \n 
 `1`- /available  : sets your current status as available
 `2`- /unavailable: sets your current status as unavailable 
 `3`- /checkstatus: allows your to check your current status
@@ -35,8 +35,20 @@ def command_start(message):
 `5`- /unblock `@username/nickname`: allows you to unblock a blocked user
 `6`- /viewblocklist : allows you to view the list of blocked users
 `7`- /viewunavailablemessage : to view your Unavailable Message
-`8`- /setunavailablemessage: set the text message that you want users to see when you're unavailable\n
+`8`- /setunavailablemessage  : set the text message that you want users to see when you're unavailable 
+`9`- /viewnicknames : allows you to view all the nicknames (with Firstname as reference)\n
 *For any help and queries please contact -* [me](telegram.me/mrgigabytebot) *or check out* [this](https://github.com/mrgigabyte/proxybot)""",parse_mode="Markdown")
+
+
+#to view all the nicknames in the format --> nick-name : user first name
+@bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["viewnicknames"])
+def command_nicknamelist(message):
+    with open(config.storage_fnamelist) as f:
+       if os.stat(config.storage_fnamelist).st_size == 0:
+          bot.send_message(message.chat.id, "No nicknames yet!")
+       else:
+          bot.send_message(message.chat.id,"`Nick Names:`" +"\n"+ "`(nick name: first name)`"+"\n"+ f.read(), parse_mode="Markdown")
+
 
 #command for admin: Used to view the whole Block List containing usernames and nicknames of the blocked users, refer config.py for more info
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["viewblocklist"])
@@ -61,7 +73,7 @@ To set one kindly send: /setunavailablemessage to me""",parse_mode="Markdown")
 # Handle always first "/start" message when new chat with your bot is created (for users other than admin)
 @bot.message_handler(func=lambda message: message.chat.id != config.my_id, commands=["start"])
 def command_start(message):
-    bot.send_message(message.chat.id, "Hey Buddy! Write me your text and the admin will get in touch with you shortly.")
+    bot.send_message(message.chat.id, "Hey "+ message.chat.first_name +"!"+"\n"+" Write me your text and the admin will get in touch with you shortly.")
     
 #command for admin to set the message the users will see when the admin status is set to unavailable
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["setunavailablemessage"])
