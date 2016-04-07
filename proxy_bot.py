@@ -29,12 +29,12 @@ def command_start(message):
     bot.send_message(message.chat.id, """*Hey Fella!\nSo, here is a list of commands that you should keep in mind:* \n 
 `1`- /available  : sets your current status as available
 `2`- /unavailable: sets your current status as unavailable 
-`3`- /setunavailablemessage: set the text message that you want users to see when you're unavailable
-`4`- /checkstatus: allows your to check your current status
-`5`- /block `@username/nickname`  : allows you to block a user
-`6`- /unblock `@username/nickname`: allows you to unblock a blocked user
-`7`- /viewblocklist : allows you to view the list of blocked users
-`8`- /viewunavailablemessage : to view your Unavailable Message\n
+`3`- /checkstatus: allows your to check your current status
+`4`- /block `@username/nickname`  : allows you to block a user
+`5`- /unblock `@username/nickname`: allows you to unblock a blocked user
+`6`- /viewblocklist : allows you to view the list of blocked users
+`7`- /viewunavailablemessage : to view your Unavailable Message
+`8`- /setunavailablemessage: set the text message that you want users to see when you're unavailable\n
 *For any help and queries please contact -* [me](telegram.me/mrgigabytebot) *or check out* [this](https://github.com/mrgigabyte/proxybot)""",parse_mode="Markdown")
 
 #command for admin: Used to view the whole Block List containing usernames and nicknames of the blocked users, refer config.py for more info
@@ -63,7 +63,7 @@ def command_start(message):
     bot.send_message(message.chat.id, "Hey Buddy! Write me your text and the admin will get in touch with you shortly.")
     
 #command for admin to set the message the users will see when the admin status is set to unavailable
-@bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["set_unavailable_message"])
+@bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["setunavailablemessage"])
 def command_start(message):
     unvb = bot.send_message(message.chat.id, "Alright now send me your text that you want others to see when you're *unavailable*",parse_mode="Markdown")
     bot.register_next_step_handler(unvb, lambda m: dictionary.unvb_msg(m, file=config.storage_nonavailmsg))
