@@ -134,7 +134,6 @@ def process_name_step(message, dict_name=None, file=None, val=None ):
       if dict_name !=None and file != None and val !=None:
           key = message.text
           lower_key = key.lower()
-          else:
           add_key_dict(file, dict_name, lower_key, val)
           bot.reply_to(message,"Thanks! " +"\n"+ "*Remember to block this user with the name:* "+"`'"+key+"'`"+" *only!*",parse_mode="Markdown" )
     except Exception as e:
