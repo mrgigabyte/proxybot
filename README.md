@@ -1,5 +1,5 @@
 #<p align="center">Telegram Proxy Bot 
-<p align="center">A simple BITM, for [Telegram](https://telegram.org/) acting as some kind of "proxy". an use it as "virtual" second account for your purposes revealing your "real" identity.
+<p align="center">A simple BITM, for [Telegram](https://telegram.org/) acting as some kind of "proxy". Can use it as "virtual" second account for your purposes without revealing your "actual" identity.
 
 <p align ="center">Credits to **Groosha** for the actual version, I've simply added certain features which I thought were needed</p> <br>
 
@@ -181,6 +181,9 @@ bot.send_message(message.chat.id, "Please click on [this](www.google.com)to sear
 ## Upcoming Features
 * Since we know that it's a bit difficult to remember all the nicknames I'll soon add a command to view a list of all the nicknames along with the user's first name **(Edit: I've added the nick-names list feature!)**
 * I would be working on adding some more helpful features for admins and maybe for the users as well let's see :)
+* Anti-Spam Feature, limiting messages sent per-second
+* Broadcast feature for admins, they can broadcast a certain message to selected users they want
+* idk maybe more ?? haha
 
 ## Remember!
 I understand, that "proxy" bots can be used to prevent spammers from being reported, so if you encounter such bots that are used to do "bad" things, feel free to report them: [abuse@telegram.org](mailto:abuse@telegram.org)
