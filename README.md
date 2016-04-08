@@ -38,6 +38,8 @@ Details On how this works is down Under [Blocking and Unblocking Feature section
 * You can now view the list of users you've blocked! By typing `/viewblocklist.` The list will contain their `@username/nickname`
 * You can check your status whether you're currently available or unavailable by typing `/checkstatus`
 * `/help` command is also there for admins to see all the available commands
+* `/viewnicknames` to view all the nicknames of the users along with their first names.
+* `/viewblockmessage` and `/setblockmessage` to view and set the block message that the user will see once he/she is blocked
 
 ## How it works
 ### Basic Functionality
@@ -148,9 +150,9 @@ So here are the following commands: <br>
 #####Setting the blocking text:
 ![screenshot](http://i.imgur.com/YwzUVEN.png)<br><br>
 #####Viewing the Block List:
-![screenshot](http://i.imgur.com/CjC3S4M.png =100x20)<br><br>
+<p align="cente">![screenshot](http://i.imgur.com/CjC3S4M.png)<br><br>
 ####Setting and Viewing Nicknames:
-![screenshot](http://i.imgur.com/E6gEQQY.png =150x)<br><br>
+<p align="center">![screenshot](http://i.imgur.com/E6gEQQY.png)<br><br>
 
 
 ### Available and Unavailable Feature
@@ -176,7 +178,13 @@ To set the unavailable message simply send:
 To view the unavailable message simply send:
 * `/viewunavailablemessage`
 
-
+####Screenshots :
+##### Setting Unavailable Message :
+![screenshot](http://i.imgur.com/sVznxXE.png)<br><br>
+##### Basic Feature :
+![screenshot](http://i.imgur.com/a4bZz3x.png)<br><br>
+##### Checking Status:
+<p align="center">![screenshot](http://i.imgur.com/KAtq778.png)<br><b>
 ## Notes and restrictions
 
 1. Message formatting (both Markdown and HTML) is disabled. You can easily add `parse_mode` argument to `send_message` function to enable it.<br>
@@ -195,7 +203,6 @@ bot.send_message(message.chat.id, "Please click on [this](www.google.com)to sear
 8. This bot only works in the private chats, I've tried making it work in the groups but it didn't really worked, if you can improve this bot then do let [me](https://telegram.me/mrgigabytebot) know! I would be glad to make this work better
 
 ## Upcoming Features
-* Since we know that it's a bit difficult to remember all the nicknames I'll soon add a command to view a list of all the nicknames along with the user's first name **(Edit: I've added the nick-names list feature!)**
 * I would be working on adding some more helpful features for admins and maybe for the users as well let's see :)
 * Anti-Spam Feature, limiting messages sent per-second
 * Broadcast feature for admins, they can broadcast a certain message to selected users they want
