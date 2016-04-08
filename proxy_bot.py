@@ -30,15 +30,34 @@ def command_start(message):
     bot.send_message(message.chat.id, """*Hey """ + message.chat.first_name +"""!\nSo, here is a list of commands that you should keep in mind:* \n 
 `1`- /available  : sets your current status as available
 `2`- /unavailable: sets your current status as unavailable 
-`3`- /checkstatus: allows your to check your current status
-`4`- /block `@username/nickname`  : allows you to block a user
-`5`- /unblock `@username/nickname`: allows you to unblock a blocked user
-`6`- /viewblocklist : allows you to view the list of blocked users
-`7`- /viewunavailablemessage : to view your Unavailable Message
-`8`- /setunavailablemessage  : set the text message that you want users to see when you're unavailable 
-`9`- /viewnicknames : allows you to view all the nicknames (with Firstname as reference)\n
+`3`- /viewunavailablemessage : to view your Unavailable Message
+`4`- /setunavailablemessage  : set the text message that you want users to see when you're unavailable 
+`5`- /checkstatus: allows your to check your current status
+`6`- /block `@username/nickname`  : allows you to block a user
+`7`- /unblock `@username/nickname`: allows you to unblock a blocked user
+`8`- /viewblockmessage: to view the block message (that the users will see)
+`9`- /setblockmessage : set the text message that you want users to see when they are blocked
+`10`-/viewblocklist  : allows you to view the list of blocked users
+`11`-/viewnicknames  : allows you to view all the nicknames (with Firstname as reference)\n
 *For any help and queries please contact -* [me](telegram.me/mrgigabytebot) *or check out* [this](https://github.com/mrgigabyte/proxybot)""",parse_mode="Markdown")
 
+
+#command for admin: Used to view the block message
+@bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["viewblockmessage"])
+def command_start(message):
+       with open(config.storage_blockmsg) as f:
+          if os.stat(config.storage_nonavailmsg).st_size == 0:
+            bot.send_message(message.chat.id, """*Oops!*
+You haven't set any *Block Message* for the users. 
+To set one kindly send: /setblockmessage to me""",parse_mode="Markdown")
+          else:
+            bot.send_message(message.chat.id,"`Your Block Message:`"+"\n"+ f.read(), parse_mode="Markdown")
+
+#command for admin to set the block message that the user after getting blocked
+@bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["setblockmessage"])
+def command_start(message):
+    blockmsg = bot.send_message(message.chat.id, "Alright now send me your text that you want the user to see when he/she is *blocked*",parse_mode="Markdown")
+    bot.register_next_step_handler(blockmsg, lambda m: dictionary.unvb_msg(m, file=config.storage_blockmsg))
 
 #to view all the nicknames in the format --> nick-name : user first name
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, commands=["viewnicknames"])
@@ -108,7 +127,8 @@ def command_start(message):
 #checks whether the admin has blocked that user via bot or not
 def blockk(message):
   if message.chat.id in user_list:
-    bot.send_message(message.chat.id, "Woops your ass is blocked!")
+     with open(config.storage_blockmsg) as t:
+        bot.send_message(message.chat.id, t.read())
 
   else:
    #forwards the message sent by the user to the admin. Only if the user is not blocked
@@ -163,7 +183,7 @@ def blockk(message):
    if message.chat.id not in user_dir.values():    
      if message.chat.username == None:
         msg = bot.send_message(config.my_id, "*Uh! the user does not have a username o_0*\nCan you please suggest a name that can be used to store the data of the following user ?\n *PS: The nickname should be unique and shouldn't contain* '`@`'",parse_mode="Markdown" )
-        bot.register_next_step_handler(msg, lambda m: dictionary.process_name_step(m, dict_name=user_dir, file=config.storage_userdir, val=message.chat.id))
+        bot.register_next_step_handler(msg, lambda m: dictionary.process_name_step(m, dict_name=user_dir, file=config.storage_userdir, val=message.chat.id, firstname = message.chat.first_name))
            
      else:
         userName = "@"+ message.chat.username
@@ -180,7 +200,7 @@ def blockk(message):
               z = userName
               if '@' in z:
                   msg = bot.send_message(config.my_id, "*Uh! the user does not have a username o_0*\nCan you please suggest a name that can be used to store the data of the following user ?\n *PS: The nickname should be unique and shouldn't contain* '`@`'",parse_mode="Markdown" )
-                  bot.register_next_step_handler(msg, lambda m: dictionary.process_name_step(m, dict_name=user_dir, file=config.storage_userdir, val=message.chat.id))
+                  bot.register_next_step_handler(msg, lambda m: dictionary.process_name_step(m, dict_name=user_dir, file=config.storage_userdir, val=message.chat.id, firstname = message.chat.first_name))
      else:
         userName = "@"+ message.chat.username
         userName = userName.lower()
