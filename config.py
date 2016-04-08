@@ -13,6 +13,7 @@ storage_avaiblist = 'txtfiles/avaiblist.txt'
 storage_nonavailmsg = 'txtfiles/nonavailmsg.txt'
 storage_namelist = 'txtfiles/namelist.txt'
 storage_fnamelist = 'txtfiles/fnamelist.txt'
+storage_blockmsg = 'txtfiles/blockmsg.txt'
 # Your own chat id. Ask https://telegram.me/my_id_bot to tell you yours
 my_id = yourid
 
@@ -28,6 +29,7 @@ storage_avaiblist   : stores all the message.chat.id's of the user. Almost simil
                       and doesn't store username
 storage_nonavailmsg : stores the message that the user will get once the admin's status has been set to unavailable
 storage_namelist    : stores the nick-names of the users in the form of dictionary key: Nick-name val: First-Name
+storage_blockmsg    : stores the message that the user will see once he/she is blocked
 
 PS: there's a blank.txt under the dir textfiles PLEASE DON'T delete that, it is used in proxy_bot.py.
 I would recommend you to NOT to change the names of the text files but it's up to you.
