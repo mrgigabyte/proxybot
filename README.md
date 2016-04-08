@@ -202,6 +202,8 @@ bot.send_message(message.chat.id, "Please click on [this](www.google.com)to sear
 7. All the text files are mentioned in config.py except **blank.txt** which is used somewhere in between the code.<br>
 ** I will not recommend you to change the name or the location of the text files. But it's up to you! **
 8. This bot only works in the private chats, I've tried making it work in the groups but it didn't really worked, if you can improve this bot then do let [me](https://telegram.me/mrgigabytebot) know! I would be glad to make this work better
+9. You can use the `/help` command to view all the commands which you can use an admin
+![screenshot](http://i.imgur.com/buBtWr5.png)
 
 ## Upcoming Features
 * I would be working on adding some more helpful features for admins and maybe for the users as well let's see :)
