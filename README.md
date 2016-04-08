@@ -184,9 +184,10 @@ To view the unavailable message simply send:
 ##### Basic Feature :
 ![screenshot](http://i.imgur.com/a4bZz3x.png)<br><br>
 ##### Checking Status:
-<p align="center">![screenshot](http://i.imgur.com/KAtq778.png)<br><b>
-## Notes and restrictions
+<p align="center">![screenshot](http://i.imgur.com/KAtq778.png)<br><br>
 
+
+## Notes and restrictions
 1. Message formatting (both Markdown and HTML) is disabled. You can easily add `parse_mode` argument to `send_message` function to enable it.<br>
 **example:**
 ``` python 
