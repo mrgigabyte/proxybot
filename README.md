@@ -46,6 +46,7 @@ The idea of this bot is pretty simple: you just place the bot between you and th
 
 <p align="center"> ![A simple scheme of interaction](https://habrastorage.org/files/4a2/d19/753/4a2d19753eb34073bfda0b872bf228b3.png)
 
+<p align="center">![Screenshot](http://i.imgur.com/wVMZRgT.png)
 
 ### Blocking and Unblocking Feature
 Alright, so after spending some time with the bot I thought `/block~number~` and `/unblock~number~` after every text was kinda annoying, so I updated the blocking feature in the bot. 
@@ -74,7 +75,7 @@ Aye! we have a solution for that to but before answering that let's make a list 
     if message.chat.id not in user_dir.values():    
      if message.chat.username == None:
         msg = bot.send_message(config.my_id, "*Uh! the user does not have a username o_0*\nCan you please suggest a name that can be used to store the data of the following user ?\n *PS: The nickname should be unique and shouldn't contain* '`@`'",parse_mode="Markdown" )
-        bot.register_next_step_handler(msg, lambda m: dictionary.process_name_step(m, dict_name=user_dir, file=config.storage_userdir, val=message.chat.id))
+        bot.register_next_step_handler(msg, lambda m: dictionary.process_name_step(m, dict_name=user_dir, file=config.storage_userdir, val=message.chat.id, firstname=message.chat.first_name))
            
      else:
         userName = "@"+ message.chat.username
@@ -91,14 +92,14 @@ Aye! we have a solution for that to but before answering that let's make a list 
               z = userName
               if '@' in z:
                   msg = bot.send_message(config.my_id, "*Uh! the user does not have a username o_0*\nCan you please suggest a name that can be used to store the data of the following user ?\n *PS: The nickname should be unique and shouldn't contain* '`@`'",parse_mode="Markdown" )
-                  bot.register_next_step_handler(msg, lambda m: dictionary.process_name_step(m, dict_name=user_dir, file=config.storage_userdir, val=message.chat.id))
+                  bot.register_next_step_handler(msg, lambda m: dictionary.process_name_step(m, dict_name=user_dir, file=config.storage_userdir, val=message.chat.id, firstname=message.chat.first_name))
      else:
         userName = "@"+ message.chat.username
         userName = userName.lower()
         if userName not in user_dir:   
             dictionary.add_key_dict(config.storage_userdir, user_dir, userName, message.chat.id) 
 ```
-***Alright so let's understand the code:***
+**Alright so let's understand the code:**
 ```python
 '''
  if message.chat.id not in user_dir.values() <-- here the bot checks whether the message.chat.id of the user exists in the dict or not
@@ -129,13 +130,28 @@ Aye! we have a solution for that to but before answering that let's make a list 
   '''
  ```
  
-I hope this answered the questions and explained all the cases mentioned above, I know it's a bit complicated and a difficult way to code but idk i just didn't get any other idea. :P
+I hope this answered the questions and explained all the cases mentioned above, I know it's a bit complicated and a difficult way to code but idk i just didn't get any other idea. :P <br><br>
+Since we know that no one is perfect in terms of recalling the previous data, I've included the `/viewnicknames` feature as well. This well help you to view all the nick-names along with the respective first-name of the user to whom it was allotted.<br><br>
 
-So now the admins can block a user simply by typing: <br>
+So here are the following commands: <br>
 * `/block @username/nickname`  <-- To **block** a user<br>
 * `/unblock @username/nickname` <-- To **unblock** a user <br>
+* `/setblockmessage` <-- To **set the block text** that the user will see once he/she is blocked <br>
+* `/viewblockmessage` <-- To **view** your own block message
+* `/viewnicknames` <-- To *view* all the allotted nicknames along with the user's first-name
 <br>
-**Admins can even view the block list by typing** `/viewblocklist`
+**Admins can even view the block list by typing** `/viewblocklist` <br>
+
+#### Screenshots:
+#####Basic Blocking Functionality:
+![screenshot](http://i.imgur.com/PSzgEDK.png)<br><br>
+#####Setting the blocking text:
+![screenshot](http://i.imgur.com/YwzUVEN.png)<br><br>
+#####Viewing the Block List:
+![screenshot](http://i.imgur.com/CjC3S4M.png =100x20)<br><br>
+####Setting and Viewing Nicknames:
+![screenshot](http://i.imgur.com/E6gEQQY.png =150x)<br><br>
+
 
 ### Available and Unavailable Feature
 There can be at times when you as an admin are unavailable or don't temporarily have access to the bot, but you at the same time want to notify all the users about your unavailability just like the way we have on answering machines ? 
