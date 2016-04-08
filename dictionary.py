@@ -135,9 +135,8 @@ else:
    user_name = load_dict(config.storage_namelist)
 
 #step handler for adding the nickname as the key for the dictionary as well as storing them in namelist file
-def process_name_step(message, dict_name=None, file=None, val=None ):
+def process_name_step(message, dict_name, file, val, firstname):
     try:
-      if dict_name !=None and file != None and val !=None:
           key = message.text
           lower_key = key.lower()
           add_key_dict(file, dict_name, lower_key, val)
