@@ -7,6 +7,9 @@ import dbhelper
 import dictionary
 import fnmatch
 import os
+import json
+import requests
+import time
 
 # Initialize bot
 bot = telebot.TeleBot(config.token)
@@ -132,8 +135,72 @@ def blockk(message):
 
   else:
    #forwards the message sent by the user to the admin. Only if the user is not blocked
-   bot.forward_message(config.my_id, message.chat.id,    message.message_id)
-   dbhelper.add_message(message.message_id + 1, message.chat.id)
+   # checks if the user has replied to any previously send message. If yes ---> Then it checks the format and sends that text again to the admin if----> No then it simply forwards the message to the admin
+   if message.reply_to_message == None:
+     bot.forward_message(config.my_id, message.chat.id,    message.message_id)
+   else:
+     replytext = message.reply_to_message.text
+     replysticker = message.reply_to_message.sticker
+     replyaudio = message.reply_to_message.audio
+     replydocument = message.reply_to_message.document
+     replyphoto = message.reply_to_message.photo
+     replyvideo = message.reply_to_message.video
+     replyvoice = message.reply_to_message.voice
+     replylocation = message.reply_to_message.location
+     replycontact = message.reply_to_message.contact
+     if replytext == None:
+       if replysticker == None: 
+          if replyaudio == None: 
+            if replydocument == None: 
+               if replyphoto == None:
+                 if replyvideo == None:
+                    if replyvoice == None: 
+                      if replylocation == None: 
+                        if replycontact == None: 
+                           bot.forward_message(config.my_id, message.chat.id,    message.message_id) 
+
+                        else:
+                          m = replycontact[-1].file_id
+                          bot.send_message(config.my_id,"<b>"+ message.chat.first_name + " replied to 👇  Contact" +"</b>", parse_mode="HTML")
+                          bot.send_contact(config.my_id, m)
+                          bot.forward_message(config.my_id, message.chat.id,    message.message_id)  
+                      else:
+                        bot.send_message(config.my_id,"<b>"+ message.chat.first_name + " replied to 👇  Location" +"</b>", parse_mode="HTML")
+                        bot.send_location(config.my_id, latitude=replylocation.latitude, longitude=replylocation.longitude)
+                        bot.forward_message(config.my_id, message.chat.id,    message.message_id)  
+                    else:
+                       m = replyvoice.file_id
+                       bot.send_message(config.my_id,"<b>"+ message.chat.first_name + " replied to 👇  Voice Note" +"</b>", parse_mode="HTML")
+                       bot.send_voice(config.my_id, m)
+                       bot.forward_message(config.my_id, message.chat.id,    message.message_id)  
+                 else:
+                  m = replyvideo.file_id
+                  bot.send_video(config.my_id, m, caption = message.chat.first_name + " replied to 👆")
+                  bot.forward_message(config.my_id, message.chat.id,    message.message_id)  
+
+               else:
+                m = replyphoto[-1].file_id
+                bot.send_photo(config.my_id, m, caption = message.chat.first_name + " replied to 👆")
+                bot.forward_message(config.my_id, message.chat.id,    message.message_id)  
+            else:
+              m = replydocument.file_id
+              bot.send_document(config.my_id, m, caption = message.chat.first_name + " replied to 👆")
+              bot.forward_message(config.my_id, message.chat.id,    message.message_id)  
+          else:
+           m = replyaudio.file_id
+           bot.send_message(config.my_id,"<b>"+ message.chat.first_name + " replied to 👇 audio " +"</b>", parse_mode="HTML")
+           bot.send_audio(config.my_id, performer=replyaudio.performer, audio=m, title=replyaudio.title,
+                           duration=replyaudio.duration)
+           bot.forward_message(config.my_id, message.chat.id,    message.message_id)   
+       else:
+           m = replysticker.file_id
+           bot.send_message(config.my_id,"<b>"+ message.chat.first_name + " replied to 👇  sticker" +"</b>", parse_mode="HTML")
+           bot.send_sticker(config.my_id,  m)
+           bot.forward_message(config.my_id, message.chat.id,    message.message_id)  
+     else:
+         bot.send_message(config.my_id, "<b>"+ message.chat.first_name + " replied to :" +"</b>"+ replytext, parse_mode="HTML")
+         bot.forward_message(config.my_id, message.chat.id,    message.message_id)
+    
    dictionary.add_avaiblist(config.storage_avaiblist,message.chat.id) #adds the message.chat.id of the user in avaiblist.txt check config.py
    q = dictionary.check_status(config.storage_availability) #checks the status of the admin whether he's available or not
    if q == "false": #if not available then the user gets the unavailable text message from unavailmsg.txt check config.py
@@ -214,16 +281,14 @@ def my_text(message):
     # If we're just sending messages to bot (not replying) -> do nothing and notify about it.
     # Else -> get ID whom to reply and send message FROM bot.
     if message.reply_to_message:
-        who_to_send_id = dbhelper.get_user_id(message.reply_to_message.message_id)
-        bot.send_chat_action(who_to_send_id, action = 'typing')
-        #shows the user that the bot is typing at the moment
-        if who_to_send_id:
-            # You can add parse_mode="Markdown" or parse_mode="HTML", however, in this case you MUST make sure,
-            # that your markup if well-formed as described here: https://core.telegram.org/bots/api#formatting-options
-            # Otherwise, your message won't be sent.
-            bot.send_message(who_to_send_id, message.text)
-            # Temporarly disabled freeing message ids. They don't waste too much space
-            # dbhelper.delete_message(message.reply_to_message.message_id)
+       if message.reply_to_message.forward_from == None:
+          bot.send_message(config.my_id,"*Oops! Something went wrong make sure you're replying to the right person!*",parse_mode="Markdown")
+       else:        
+        
+        chat_id = message.reply_to_message.forward_from.id
+        bot.send_chat_action(chat_id, action = 'typing')
+        bot.send_message(chat_id, message.text)        
+
     else:      
        #checks whether the admin has entered /block or /unblock command
        #if /block --> true then it gives the message.chat.id number as STRING after first 6 characters
@@ -246,7 +311,7 @@ def my_text(message):
 Like:
 /block `@username/nickname`""",parse_mode="Markdown") 
        elif '/unblock' in message.text:
-             #if /unblock is true then it gets the username of the user and removes his/her id from the block list
+       #if /unblock is true then it gets the username of the user and removes his/her id from the block list
          if fnmatch.fnmatch(message.text,'/unblock *'):  #check whether the text message is /unblock 'random character' using the wildcard: *
              userid = message.text[8:].strip()
              chat_id = user_dir.get(userid.lower())
@@ -260,39 +325,69 @@ Like:
              bot.send_message(message.chat.id, """Woops! you did a mistake, please type the username of the user you want to unblock after the command
 Like:
 /unblock `@username/nickname`""",parse_mode="Markdown")    
+      
        else:
-          bot.send_message(message.chat.id, "No one to reply!")
+        url = 'http://api.program-o.com/v2/chatbot/'
+        if message.text == None:
+           bot.send_message(config.my_id,"No one to reply!")
+        else:
+
+          s = message.text.split(' ')
+          args = "%".join(s)
+          cid = message.chat.id
+          paramsa = {
+                'bot_id' : '10',
+                'say' : args,
+                'convo_id' : message.from_user.id,
+	        'format' : 'json'
+                    }
+          jstr = requests.get(url, params=paramsa, headers=None, files=None, data=None)
+          data = json.loads(jstr.text)
+          if data['botsay'] =="":
+            bot.send_chat_action(cid, 'typing')
+            bot.reply_to(message, "<b> Uh Oh ... can you type that again ? :( Something went wrong </b>" , disable_web_page_preview="True", parse_mode="HTML")
+          if jstr.status_code != 200:
+             bot.reply_to(message, "*Ah !. An error was found. Please report this to my [Developer](https://telegram.me/nandan):* " + str(jstr.status_code), parse_mode="Markdown")
+          else:
+            bot.send_chat_action(cid, 'typing')
+            bot.reply_to(message, "<b>" + data['botsay'] + "</b>" , disable_web_page_preview="True", parse_mode="HTML")
+
+
             
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, content_types=["sticker"])
 def my_sticker(message):
+    # If we're just sending messages to bot (not replying) -> do nothing and notify about it.
+    # Else -> get ID whom to reply and send message FROM bot.
     if message.reply_to_message:
-        who_to_send_id = dbhelper.get_user_id    (message.reply_to_message.message_id)
-         
-        if who_to_send_id:
-            bot.send_sticker(who_to_send_id, message.sticker.file_id)
-            bot.send_chat_action(who_to_send_id, action = 'typing')
+      if message.reply_to_message.forward_from == None:
+          bot.send_message(config.my_id,"*Oops! Something went wrong make sure you're replying to the right person!*",parse_mode="Markdown")
+      else:
+        chat_id = message.reply_to_message.forward_from.id
+        bot.send_chat_action(chat_id, action = 'typing')
+        bot.send_sticker(chat_id, message.sticker.file_id)       
     else:
-        bot.send_message(message.chat.id, "No one to reply!")
-
+        bot.send_message(config.my_id, "No one to reply")
 
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, content_types=["photo"])
 def my_photo(message):
     if message.reply_to_message:
-        who_to_send_id = dbhelper.get_user_id(message.reply_to_message.message_id)
+      if message.reply_to_message.forward_from == None:
+          bot.send_message(config.my_id,"*Oops! Something went wrong make sure you're replying to the right person!*",parse_mode="Markdown")
+      else:
+        who_to_send_id = message.reply_to_message.forward_from.id
         bot.send_chat_action(who_to_send_id, action = 'upload_photo')
-        if who_to_send_id:
-            # Send the largest available (last item in photos array)
-            bot.send_photo(who_to_send_id, list(message.photo)[-1].file_id)
+        bot.send_photo(who_to_send_id, list(message.photo)[-1].file_id)
     else:
         bot.send_message(message.chat.id, "No one to reply!")
 
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, content_types=["voice"])
 def my_voice(message):
     if message.reply_to_message:
-        who_to_send_id = dbhelper.get_user_id(message.reply_to_message.message_id)
-        if who_to_send_id:
-            # bot.send_chat_action(who_to_send_id, "record_audio")
-            bot.send_voice(who_to_send_id, message.voice.file_id, duration=message.voice.duration)
+      if message.reply_to_message.forward_from == None:
+          bot.send_message(config.my_id,"*Oops! Something went wrong make sure you're replying to the right person!*",parse_mode="Markdown")
+      else:
+        who_to_send_id = message.reply_to_message.forward_from.id      
+        bot.send_voice(who_to_send_id, message.voice.file_id, duration=message.voice.duration)
     else:
         bot.send_message(message.chat.id, "No one to reply!")
 
@@ -300,11 +395,12 @@ def my_voice(message):
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, content_types=["document"])
 def my_document(message):
     if message.reply_to_message:
-        who_to_send_id = dbhelper.get_user_id(message.reply_to_message.message_id)
+      if message.reply_to_message.forward_from == None:
+          bot.send_message(config.my_id,"*Oops! Something went wrong make sure you're replying to the right person!*",parse_mode="Markdown")
+      else:
+        who_to_send_id = message.reply_to_message.forward_from.id
         bot.send_chat_action(who_to_send_id, action = 'upload_document')
-        if who_to_send_id:
-            # bot.send_chat_action(who_to_send_id, "upload_document")
-            bot.send_document(who_to_send_id, data=message.document.file_id)
+        bot.send_document(who_to_send_id, data=message.document.file_id)
     else:
         bot.send_message(message.chat.id, "No one to reply!")
 
@@ -312,11 +408,12 @@ def my_document(message):
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, content_types=["audio"])
 def my_audio(message):
     if message.reply_to_message:
-        who_to_send_id = dbhelper.get_user_id(message.reply_to_message.message_id)
+      if message.reply_to_message.forward_from == None:
+          bot.send_message(config.my_id,"*Oops! Something went wrong make sure you're replying to the right person!*",parse_mode="Markdown")
+      else:
+        who_to_send_id = message.reply_to_message.forward_from.id
         bot.send_chat_action(who_to_send_id, action = 'upload_audio')
-        if who_to_send_id:
-            # bot.send_chat_action(who_to_send_id, "upload_audio")
-            bot.send_audio(who_to_send_id, performer=message.audio.performer,
+        bot.send_audio(who_to_send_id, performer=message.audio.performer,
                            audio=message.audio.file_id, title=message.audio.title,
                            duration=message.audio.duration)
     else:
@@ -326,11 +423,12 @@ def my_audio(message):
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, content_types=["video"])
 def my_video(message):
     if message.reply_to_message:
-        who_to_send_id = dbhelper.get_user_id(message.reply_to_message.message_id)
+      if message.reply_to_message.forward_from == None:
+          bot.send_message(config.my_id,"*Oops! Something went wrong make sure you're replying to the right person!*",parse_mode="Markdown")
+      else:
+        who_to_send_id = message.reply_to_message.forward_from.id
         bot.send_chat_action(who_to_send_id, action = 'upload_video')
-        if who_to_send_id:
-            # bot.send_chat_action(who_to_send_id, "upload_video")
-            bot.send_video(who_to_send_id, data=message.video.file_id, duration=message.video.duration)
+        bot.send_video(who_to_send_id, data=message.video.file_id, duration=message.video.duration)
     else:
         bot.send_message(message.chat.id, "No one to reply!")
 
@@ -339,11 +437,9 @@ def my_video(message):
 @bot.message_handler(func=lambda message: message.chat.id == config.my_id, content_types=["location"])
 def my_location(message):
     if message.reply_to_message:
-        who_to_send_id = dbhelper.get_user_id(message.reply_to_message.message_id)
+        who_to_send_id = message.reply_to_message.forward_from.id
         bot.send_chat_action(who_to_send_id, action = 'find_location')
-        if who_to_send_id:
-            # bot.send_chat_action(who_to_send_id, "find_location")
-            bot.send_location(who_to_send_id, latitude=message.location.latitude, longitude=message.location.longitude)
+        bot.send_location(who_to_send_id, latitude=message.location.latitude, longitude=message.location.longitude)
     else:
         bot.send_message(message.chat.id, "No one to reply!")
 
