@@ -3,6 +3,7 @@
 
 <p align ="center">Credits to **Groosha** for the actual version, I've simply added certain features which I thought were needed</p> <br>
 
+ * [ChangeLog!](#changelog)
  * [Prerequisites](#prerequisites)
  * [How to install](#how-to-install)
  * [What's new ?](#whats-new-)
@@ -16,11 +17,42 @@
  * [F.A.Q.](#faq)
  * [Contact](#contact)
 
+##ChangeLog!
+####Version 1.4 (current):
+   * **Major change:** Removed the database methode of storing values. 
+   * **Added:** `Reply_to_message` feature. Now Admins can see what message the user replied to. Check [In Reply to](#in-reply-to) feature
+   * Fixed some small bugs.
 
+####Version 1.3:
+   * **Major Updated:** `/setblockmessage` and `/viewblockmessage` Admins can now set a custom block message.
+   * Fixed some minor bugs.
+   * **Bugs in this version:** Sometimes the bot fails to reply the user
+  
+
+####Version 1.2:
+   * **Major Update:** 
+     * **Added:**
+         * [Available and Unavailable Feature](#available-and-unavailable-feature)
+         * `/setunavailablemessage` feature
+         * `/viewblocklist` feature
+         * `/viewnicknames` feature
+   * **Bugs in this version:** No bugs as such
+   
+
+####Version1.1:
+   * **Major Update:** Improve the blocking functionality, admins can now block a user by `/block @username/nickname`
+   * **Bugs in this version:** No bugs as such
+   
+
+####Version1.0
+   * **Major Update**: Users can now block a user they want to by simply tapping `/block<userid>` and to unblock by `/unblock<userid>`
+   * **Bugs in this version** : The /block<userid> feature was a bit annoying (fixed in the next update)
+ 
+   
  
 ## Prerequisites
-* Python 3 (maybe works with Python 2, but I haven't tested it);
-* [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI/) library;
+* Python 3 (works only with Python3);
+* [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI/) library (with bot 2.0 support);
 * Telegram account.
 * Basic Knowledge about coding of course! 
 * And the ability to read the manual patiently :D 
@@ -40,10 +72,12 @@ Details On how this works is down Under [Blocking and Unblocking Feature section
 * `/help` command is also there for admins to see all the available commands
 * `/viewnicknames` to view all the nicknames of the users along with their first names.
 * `/viewblockmessage` and `/setblockmessage` to view and set the block message that the user will see once he/she is blocked
+* Changed the style of storing user ids. It doesn't store the data of the users in a database anymore
+* [In Reply to](#in-reply-to) feature. Admin can now see what message the user has force replied to
 
 ## How it works
 ### Basic Functionality
-The idea of this bot is pretty simple: you just place the bot between you and the one you want to chat with. The upside is that no one will find out your unique chat id or some other info (nickname, first name or avatar, for example). They won't also know your last seen time. However, the downside is that you can't initiate chat with someone (Because you're writing from bot and bots can't start chats to prevent spam), so you'll have to ask people to write to your bot first. Plus you will be only able to see their force replies in case they try to force reply one of the text in the private chat and not the actual text they forced reply to, in simple words..<br>  **Here's an example** : if a user force replies an image that was previously there in the chat with "what do you think about this picture up there ^ " then you will just receive the later text message and not the picture again.
+The idea of this bot is pretty simple: you just place the bot between you and the one you want to chat with. The upside is that no one will find out your unique chat id or some other info (nickname, first name or avatar, for example). They won't also know your last seen time. However, the downside is that you can't initiate chat with someone (Because you're writing from bot and bots can't start chats to prevent spam), so you'll have to ask people to write to your bot first. 
 
 
 <p align="center"> ![A simple scheme of interaction](https://habrastorage.org/files/4a2/d19/753/4a2d19753eb34073bfda0b872bf228b3.png)
@@ -185,6 +219,12 @@ To view the unavailable message simply send:
 ![screenshot](http://i.imgur.com/a4bZz3x.png)<br><br>
 ##### Checking Status:
 <p align="center">![screenshot](http://i.imgur.com/KAtq778.png)<br><br>
+
+##In Reply To:
+Well as stated before/in the previous version. The admins were not able to see the text the user has force replied to, since the bot only forwards every new text and not the old ones.. So admin wouldn't know if the user has replied to a previously sent text or not. Now admins can see the previously send message to which the user replied.
+
+###Screenshot:
+<p align="center">![screenshot](http://i.imgur.com/EFJs7T3.png)<br><br>
 
 
 ## Notes and restrictions
