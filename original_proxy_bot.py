@@ -123,6 +123,7 @@ def check(message):
     bot.forward_message(config.my_id, message.chat.id, message.message_id)
     dbhelper.add_message(message.message_id + 1, message.chat.id)
 
-
+print('Bot has Started\nPlease text the bot on:@{}'.format(bot.get_me().username))
+bot.send_message(config.my_id,'Bot Started')
 if __name__ == '__main__':
     bot.polling(none_stop=True)
