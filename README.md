@@ -21,6 +21,8 @@
 ####Version 1.4.1 (current):
    * **Major change:** Added launch.sh and launch2.sh. Simply run launch.sh to run the bot the features added by me and launch2.sh to run the original proxy bot
    * Fixed some small bugs.
+    
+
 ####Version 1.4:
    * **Major change:** Removed the database methode of storing values. 
    * **Added:** `Reply_to_message` feature. Now Admins can see what message the user replied to. Check [In Reply to](#in-reply-to) feature
