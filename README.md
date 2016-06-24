@@ -23,7 +23,7 @@
    * Fixed some small bugs.
     
 
-####Version 1.4:
+####Version 1.4.0:
    * **Major change:** Removed the database methode of storing values. 
    * **Added:** `Reply_to_message` feature. Now Admins can see what message the user replied to. Check [In Reply to](#in-reply-to) feature
    * Fixed some small bugs.
