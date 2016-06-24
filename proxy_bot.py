@@ -443,6 +443,7 @@ def my_location(message):
     else:
         bot.send_message(message.chat.id, "No one to reply!")
 
-
+print('Bot has Started\nPlease text the bot on:@{}'.format(bot.get_me().username))
+bot.send_message(config.my_id,'Bot Started')
 if __name__ == '__main__':
     bot.polling(none_stop=True)
