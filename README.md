@@ -18,7 +18,10 @@
  * [Contact](#contact)
 
 ##ChangeLog!
-####Version 1.4 (current):
+####Version 1.4.1 (current):
+   * **Major change:** Added launch.sh and launch2.sh. Simply run launch.sh to run the bot the features added by me and launch2.sh to run the original proxy bot
+   * Fixed some small bugs.
+####Version 1.4:
    * **Major change:** Removed the database methode of storing values. 
    * **Added:** `Reply_to_message` feature. Now Admins can see what message the user replied to. Check [In Reply to](#in-reply-to) feature
    * Fixed some small bugs.
@@ -61,7 +64,7 @@
 * Get your own bot's token from [@BotFather](https://telegram.me/botfather);
 * Find out your account's unique ID (you can use [ID bot](https://telegram.me/my_id_bot) or just send message via Curl or something else and get `message.chat.id` from response JSON);
 * Fill in the necessary variables in `config.py`;
-* Start bot: `python3 proxy_bot.py`
+* Start bot: `bash launch.sh`
 
 ## What's new ???
 * So I thought probably getting `/block~number~` and `/unblock~number~` after every text message was a bit annoying and it increases the number of text messages received, keeping this in mind I updated the bot. Now the admin can block a user by typing `/block @username/nickname` and to unblock by `/unblock @username/nickname`<br>
@@ -238,7 +241,7 @@ bot.send_message(message.chat.id, "Please click on [this](www.google.com)to sear
 3. Storage is needed to save `"message_id":"user_id"` key-value pairs. First, I intended to delete `message_id` which I've already answered, but then I decided to remove this, so you can answer any message from certain user and multiple times.
 4. Supported message types in reply: `text`, `sticker`, `photo`, `video`, `audio`, `voice`, `document`, `location`.
 5. To block a user simply type`/block @username/nickname` and to unblock a user simply type `/unblock @username/nickname`
-6. If you dont need these features then you can simply use the original version of the bot which was made by Groosha. Open the terminal and enter `python3 original_proxy_bot.py`
+6. If you dont need these features then you can simply use the original version of the bot which was made by Groosha. Open the terminal and enter `bash launch2.sh`
 7. All the text files are mentioned in config.py except **blank.txt** which is used somewhere in between the code.<br>
 ** I will not recommend you to change the name or the location of the text files. But it's up to you! **
 8. This bot only works in the private chats, I've tried making it work in the groups but it didn't really worked, if you can improve this bot then do let [me](https://telegram.me/mrgigabytebot) know! I would be glad to make this work better
