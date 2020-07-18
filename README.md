@@ -1,4 +1,4 @@
-#<p align="center">Telegram Proxy Bot 
+# <p align="center">Telegram Proxy Bot 
 <p align="center">A simple BITM, for [Telegram](https://telegram.org/) acting as some kind of "proxy". Can use it as "virtual" second account for your purposes without revealing your "actual" identity.
 
 <p align ="center">Credits to **Groosha** for the actual version, I've simply added certain features which I thought were needed</p> <br>
@@ -17,24 +17,24 @@
  * [F.A.Q.](#faq)
  * [Contact](#contact)
 
-##ChangeLog!
-####Version 1.4.1 (current):
+## ChangeLog!
+#### Version 1.4.1 (current):
    * **Major change:** Added launch.sh and launch2.sh. Simply run launch.sh to run the bot the features added by me and launch2.sh to run the original proxy bot
    * Fixed some small bugs.
     
 
-####Version 1.4.0:
+#### Version 1.4.0:
    * **Major change:** Removed the database methode of storing values. 
    * **Added:** `Reply_to_message` feature. Now Admins can see what message the user replied to. Check [In Reply to](#in-reply-to) feature
    * Fixed some small bugs.
 
-####Version 1.3:
+#### Version 1.3:
    * **Major Updated:** `/setblockmessage` and `/viewblockmessage` Admins can now set a custom block message.
    * Fixed some minor bugs.
    * **Bugs in this version:** Sometimes the bot fails to reply the user
   
 
-####Version 1.2:
+#### Version 1.2:
    * **Major Update:** 
      * **Added:**
          * [Available and Unavailable Feature](#available-and-unavailable-feature)
@@ -44,12 +44,12 @@
    * **Bugs in this version:** No bugs as such
    
 
-####Version1.1:
+#### Version1.1:
    * **Major Update:** Improve the blocking functionality, admins can now block a user by `/block @username/nickname`
    * **Bugs in this version:** No bugs as such
    
 
-####Version1.0
+#### Version1.0
    * **Major Update**: Users can now block a user they want to by simply tapping `/block<userid>` and to unblock by `/unblock<userid>`
    * **Bugs in this version** : The /block<userid> feature was a bit annoying (fixed in the next update)
  
